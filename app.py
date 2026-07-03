@@ -191,8 +191,13 @@ def render_mictest(sc, persona, S):
         stats = engine_audio.analyze_wav(sample.getvalue())
         verdict = engine_audio.mic_verdict(stats)
         if stats:
-            st.progress(min(1.0, stats["rms"] * 15), text=S["level_label"])
-        st.session_state.mic_ok = verdict == "ok"
+            st.progress(min(1.0, stats["rms"] * 25), text=S["level_label"])
+            st.caption(
+                f'RMS {stats["rms"]:.4f} · peak {stats["peak"]:.2f} · {stats["duration"]:.1f}s'
+            )
+        # the gate exists to catch *silent* failure — any detected voice passes;
+        # weak/saturated only warn (locking out a working mic is the worse failure)
+        st.session_state.mic_ok = verdict != "none"
         st.markdown(S[f"mic_{verdict}"])
 
     col_back, col_next = st.columns(2)
