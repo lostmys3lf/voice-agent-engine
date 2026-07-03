@@ -246,11 +246,14 @@ def render_realtime_sim(sc, persona, S):
     ui.render_html(
         realtime.realtime_html(st.session_state.rt_token, persona, S), height=260
     )
-    st.caption(S["rt_transcript_help"])
-    st.text_area(
-        realtime.SYNC_LABEL, key="rt_transcript_raw",
-        label_visibility="collapsed", height=110,
-    )
+    # plumbing, not UI: the component mirrors the live transcript into this
+    # text_area so Python can score it — keep it out of sight in an expander
+    with st.expander(S["rt_transcript_label"], expanded=False):
+        st.caption(S["rt_transcript_help"])
+        st.text_area(
+            realtime.SYNC_LABEL, key="rt_transcript_raw",
+            label_visibility="collapsed", height=110,
+        )
 
     col_end, col_switch = st.columns(2)
     if col_end.button(S["end_and_score"], type="primary"):

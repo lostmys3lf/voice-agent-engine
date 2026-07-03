@@ -19,6 +19,10 @@
   if a Streamlit upgrade breaks it, the "end & score" path for Realtime loses
   its transcript (chained path is unaffected — its history lives in Python).
   Mitigation idea: switch to a bidirectional custom component.
+  2026-07-03: the sync text_area now lives inside a *collapsed* st.expander
+  (UX: raw JSON was visible). Confirm live that the JS mirror still reaches it
+  while collapsed — if the transcript comes up empty at scoring, this is the
+  first suspect (expand the expander during the session to check).
 - HTML embedding uses `st.iframe` (new API; `components.v1.html` is deprecated,
   fallback kept in `engine/ui.py::render_html`). Verify live that the iframe is
   not sandboxed in a way that blocks the parent-DOM transcript sync above.

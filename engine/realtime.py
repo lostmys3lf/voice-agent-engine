@@ -55,12 +55,21 @@ def mint_client_secret(api_key: str, instructions: str, voice: str, language: st
 
 
 _RT_HTML = Template("""
-<div style="font-family:'Segoe UI',sans-serif;">
+<style>
+  /* theme-aware text colors: the iframe sits transparently on Streamlit's page,
+     so hardcoded dark text vanishes on the dark theme */
+  :root { --fg:#1f2328; --muted:#667085; }
+  :root.dark { --fg:#f2f3f5; --muted:#9aa4b2; }
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) { --fg:#f2f3f5; --muted:#9aa4b2; }
+  }
+</style>
+<div style="font-family:'Segoe UI',sans-serif;color:var(--fg);">
   <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
     <div style="font-size:32px;line-height:1;">$AVATAR</div>
     <div style="flex:1;">
       <div style="font-weight:600;color:$COLOR;">$NAME</div>
-      <div id="status" style="font-size:13px;color:#666;">$IDLE</div>
+      <div id="status" style="font-size:13px;color:var(--muted);">$IDLE</div>
     </div>
     <button id="startbtn" style="font-size:15px;padding:8px 18px;cursor:pointer;
             background:$COLOR;color:#fff;border:none;border-radius:8px;">▶ $STARTLBL</button>
@@ -71,12 +80,23 @@ _RT_HTML = Template("""
   </div>
   <div style="background:${COLOR}14;border-left:4px solid $COLOR;padding:10px 14px;
               border-radius:10px;min-height:56px;">
-    <div id="cap" style="font-size:16px;line-height:1.55;color:#222;"></div>
+    <div id="cap" style="font-size:16px;line-height:1.55;color:var(--fg);"></div>
   </div>
-  <div id="udiv" style="font-size:13px;color:#555;margin-top:6px;min-height:18px;"></div>
+  <div id="udiv" style="font-size:13px;color:var(--muted);margin-top:6px;min-height:18px;"></div>
 </div>
 <script>
 var TOKEN = "$TOKEN", MODEL = "$MODEL", CALLS_URL = "$CALLS_URL", SYNC = "$SYNC";
+
+// Streamlit's theme can differ from the OS preference; read the actual page
+// background so the caption text always contrasts with it.
+try {
+  var bg = window.parent.getComputedStyle(window.parent.document.body).backgroundColor;
+  var m = bg.match(/(\\d+)[, ]+(\\d+)[, ]+(\\d+)/);
+  if (m) {
+    var lum = 0.299 * m[1] + 0.587 * m[2] + 0.114 * m[3];
+    document.documentElement.className = lum < 128 ? 'dark' : 'light';
+  }
+} catch (e) {}  // cross-origin etc. -> media query fallback applies
 var pc = null, dc = null, audioEl = null, transcript = [], cur = "";
 var statusEl = document.getElementById('status'), cap = document.getElementById('cap');
 var udiv = document.getElementById('udiv');
