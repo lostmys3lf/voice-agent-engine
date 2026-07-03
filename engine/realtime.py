@@ -44,7 +44,13 @@ def mint_client_secret(api_key: str, instructions: str, voice: str, language: st
         json=payload,
         timeout=20,
     )
-    resp.raise_for_status()
+    if not resp.ok:
+        # surface OpenAI's own error message, not just "400 Client Error"
+        try:
+            detail = resp.json()["error"]["message"]
+        except Exception:
+            detail = resp.text[:300]
+        raise RuntimeError(f"HTTP {resp.status_code} — {detail}")
     return resp.json()["value"]
 
 

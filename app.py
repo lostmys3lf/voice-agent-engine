@@ -236,6 +236,10 @@ def render_realtime_sim(sc, persona, S):
         if st.button(S["switch_to_fallback"]):
             st.session_state.mode = "chained"
             st.rerun()
+        # escape hatch: a bad API key would otherwise strand the user here
+        if st.button(S["back"]):
+            st.session_state.stage = "mictest"
+            st.rerun()
         return
 
     st.caption(S["rt_start_hint"])
@@ -283,6 +287,9 @@ def render_chained_sim(sc, persona, S):
                 )
             except Exception as e:
                 st.error(f'{S["api_error"]}: {e}')
+                if st.button(S["back"]):
+                    st.session_state.stage = "mictest"
+                    st.rerun()
                 return
         st.session_state.history.append({"role": "assistant", "text": text})
         st.session_state.last_reply_b64 = base64.b64encode(audio_bytes).decode()
