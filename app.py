@@ -214,6 +214,10 @@ def render_mictest(sc, persona, S):
 def render_simulation(sc, persona, S):
     st.header(f'🗣️ {S["sim_title"]} — {persona["avatar"]} {persona["name"]}')
     ui.disclosure(S)
+    # keep the mission + product facts at hand during the conversation —
+    # same scenario-config text as the briefing stage, just within reach
+    with st.expander(S["sim_brief_label"], expanded=True):
+        st.markdown(format_text(sc["briefing"], sc, persona))
     if st.session_state.mode == "realtime":
         render_realtime_sim(sc, persona, S)
     else:
