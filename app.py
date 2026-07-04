@@ -7,7 +7,6 @@ scenario config (scenarios/); the engine never hardcodes it — see CLAUDE.md.
 
 import base64
 import hashlib
-import json
 import os
 
 import streamlit as st
@@ -62,7 +61,7 @@ def reset_conversation():
     st.session_state.last_reply_b64 = None
     st.session_state.last_turn_id = None
     st.session_state.scoring_result = None
-    for widget_key in ("rt_transcript_raw", "mic_test", "chat_mic"):
+    for widget_key in (realtime.RT_COMPONENT_KEY, "mic_test", "chat_mic"):
         st.session_state.pop(widget_key, None)
 
 
@@ -83,12 +82,8 @@ def current_context():
     return sc, persona, get_strings(sc["language"])
 
 
-def parse_rt_transcript(raw: str) -> list:
-    """Parse the JSON mirrored by the realtime component into engine history."""
-    try:
-        items = json.loads(raw or "[]")
-    except json.JSONDecodeError:
-        return []
+def parse_rt_transcript(items) -> list:
+    """Normalize the transcript list sent by the realtime component into engine history."""
     history = []
     for item in items if isinstance(items, list) else []:
         if not isinstance(item, dict):
@@ -247,25 +242,13 @@ def render_realtime_sim(sc, persona, S):
         return
 
     st.caption(S["rt_start_hint"])
-    ui.render_html(
-        realtime.realtime_html(st.session_state.rt_token, persona, S), height=260
-    )
-    # plumbing, not UI: the component mirrors the live transcript into this
-    # text_area so Python can score it. Hide it with CSS only — tucking it in a
-    # collapsed expander broke the JS mirror (empty transcript at scoring)
-    st.markdown(
-        f"<style>div[data-testid='stTextArea']:has("
-        f"textarea[aria-label='{realtime.SYNC_LABEL}']){{display:none;}}</style>",
-        unsafe_allow_html=True,
-    )
-    st.text_area(
-        realtime.SYNC_LABEL, key="rt_transcript_raw",
-        label_visibility="collapsed", height=68,
-    )
+    # bidirectional component: its JS pushes the live transcript to Python via
+    # setStateValue — no hidden text_area mirror (that hack failed silently live)
+    result = realtime.rt_component(st.session_state.rt_token, persona, S)
 
     col_end, col_switch = st.columns(2)
     if col_end.button(S["end_and_score"], type="primary"):
-        history = parse_rt_transcript(st.session_state.get("rt_transcript_raw", ""))
+        history = parse_rt_transcript(result.transcript)
         if not history:
             st.warning(S["empty_transcript_warning"])
         else:
@@ -274,7 +257,7 @@ def render_realtime_sim(sc, persona, S):
             st.rerun()
     if col_switch.button(S["switch_to_fallback"]):
         # keep whatever transcript we already have so the conversation continues
-        history = parse_rt_transcript(st.session_state.get("rt_transcript_raw", ""))
+        history = parse_rt_transcript(result.transcript)
         st.session_state.history = history
         st.session_state.opening_done = bool(history)
         st.session_state.mode = "chained"

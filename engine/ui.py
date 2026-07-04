@@ -22,13 +22,22 @@ def render_html(html: str, height: int) -> None:
         components.html(html, height=height)
 
 _PLAYER = Template("""
+<style>
+  /* theme-aware caption color: the iframe sits transparently on Streamlit's
+     page, so hardcoded dark text vanishes on the dark theme */
+  :root { --fg:#1f2328; }
+  :root.dark { --fg:#f2f3f5; }
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) { --fg:#f2f3f5; }
+  }
+</style>
 <div style="font-family:'Segoe UI',sans-serif;">
   <div style="display:flex;gap:10px;align-items:flex-start;">
     <div style="font-size:30px;line-height:1;">$AVATAR</div>
     <div style="background:${COLOR}14;border-left:4px solid $COLOR;padding:10px 14px;
                 border-radius:10px;min-height:48px;flex:1;">
       <div style="font-weight:600;color:$COLOR;font-size:13px;margin-bottom:2px;">$NAME</div>
-      <div id="cap" style="font-size:16px;line-height:1.55;color:#222;"></div>
+      <div id="cap" style="font-size:16px;line-height:1.55;color:var(--fg);"></div>
     </div>
   </div>
   <audio id="au" src="data:audio/mpeg;base64,$B64"></audio>
@@ -38,6 +47,16 @@ _PLAYER = Template("""
   </div>
 </div>
 <script>
+// Streamlit's theme can differ from the OS preference; read the actual page
+// background so the caption text always contrasts with it.
+try {
+  var bg = window.parent.getComputedStyle(window.parent.document.body).backgroundColor;
+  var m = bg.match(/(\\d+)[, ]+(\\d+)[, ]+(\\d+)/);
+  if (m) {
+    var lum = 0.299 * m[1] + 0.587 * m[2] + 0.114 * m[3];
+    document.documentElement.className = lum < 128 ? 'dark' : 'light';
+  }
+} catch (e) {}  // sandboxed/cross-origin -> media query fallback applies
 var words = $TEXT_JSON.split(/\\s+/);
 var TID = "$TID";
 var au = document.getElementById('au'), cap = document.getElementById('cap');
