@@ -34,7 +34,8 @@ SCENARIO = {
         "**Lawan bicaramu:** {avatar} **{name}** — {scenario_brief}\n\n"
         "**Suasana hatinya:** {mood}.\n\n"
         "Persona akan menyapa lebih dulu. Di akhir sesi, percakapanmu dinilai "
-        "terhadap rubrik 6 langkah penjualan."
+        "memakai kerangka SPIN Selling: gali situasi & masalahnya, tunjukkan "
+        "dampaknya, lalu arahkan ke nilai solusinya."
     ),
 
     "opening": (
@@ -126,28 +127,30 @@ SCENARIO = {
     ],
 
     "scoring": {
+        # Rubrik mengikuti kerangka SPIN Selling (Neil Rackham, 1988) — kerangka
+        # penjualan publik/umum, bukan metodologi milik entitas mana pun.
         "steps": [
-            "Pembukaan: menyapa, memperkenalkan diri dan distributor, membangun hubungan",
-            "Menggali kebutuhan: bertanya tentang kondisi toko, produk yang laku, dan kekhawatiran pemilik",
-            "Presentasi solusi: menjelaskan margin, program retur, dan dukungan display secara relevan",
-            "Penanganan keberatan: merespons keberatan rak penuh / stok tidak laku dengan solusi konkret",
-            "Ajakan bertindak: mengarahkan ke pesanan perdana atau kesepakatan uji coba",
-            "Profesionalisme: sopan, jujur, tidak memaksa, dan menghargai waktu pemilik toko",
+            "Situation — menggali kondisi toko, produk yang laku, dan pola belanja pemilik",
+            "Problem — mengangkat kendala atau kebutuhan yang belum tertangani di toko",
+            "Implication — menggali dampak kendala itu bagi omzet atau pelanggan toko",
+            "Need-payoff — mengaitkan margin, program retur, dan dukungan display dengan nilai bagi toko",
+            "Komitmen — mengarahkan ke pesanan perdana atau kesepakatan uji coba tanpa memaksa",
         ],
-        "threshold": 4,
-        "pass_label": "LULUS",
-        "fail_label": "PERLU PERBAIKAN",
+        "threshold": 3,
+        "pass_label": "KONSULTATIF",
+        "fail_label": "PERLU LATIHAN",
         "feedback_prompt": (
-            "Kamu adalah pelatih penjualan FMCG berpengalaman. Nilai percakapan "
-            "latihan berikut antara {user_role} (peserta latihan, dinilai) dan "
-            "{ai_role} (diperankan AI, tidak dinilai).\n\n"
-            "Rubrik ({total} langkah):\n{steps}\n\n"
+            "Kamu adalah pelatih penjualan FMCG yang menilai memakai kerangka SPIN "
+            "Selling (Neil Rackham). Nilai percakapan latihan berikut antara "
+            "{user_role} (peserta latihan, dinilai) dan {ai_role} (diperankan AI, "
+            "tidak dinilai).\n\n"
+            "Rubrik SPIN ({total} tahap):\n{steps}\n\n"
             "Transkrip:\n{transcript}\n\n"
             "Nilai HANYA performa {user_role}. Balas dalam JSON persis dengan format:\n"
-            '{{"steps": [{{"step": "<nama langkah>", "met": true, "note": "<catatan singkat>"}}, ...], '
+            '{{"steps": [{{"step": "<nama tahap>", "met": true, "note": "<catatan singkat>"}}, ...], '
             '"feedback": "<2-4 kalimat umpan balik Bahasa Indonesia: apresiasi lalu area perbaikan>"}}\n'
             "Urutan dan jumlah item `steps` harus sama dengan rubrik. Jika sesi sangat "
-            "singkat, tetap nilai apa adanya (langkah yang tidak muncul = false) dan "
+            "singkat, tetap nilai apa adanya (tahap yang tidak muncul = false) dan "
             "berikan feedback yang membangun."
         ),
     },

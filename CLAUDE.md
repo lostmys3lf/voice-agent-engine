@@ -108,7 +108,8 @@ The demo should *feel* like a live voice conversation with a character, not a ch
 - **Chained voice loop** (STT → LLM → TTS) kept as the **reliability fallback** — do not delete it.
 - **Mic Test gate**: verify mic permission/level (verdict OK / weak / not detected) and **lock "Start" until it
   passes.**
-- **One reference scenario** (sales roleplay, fictional): ~4 personas, briefing, 6-step scoring rubric.
+- **One reference scenario** (sales roleplay, fictional): ~4 personas, briefing, a config-driven scoring
+  rubric grounded in a public sales framework (SPIN Selling — not any client's methodology).
 - **Config-driven scoring**: verdict (pass / needs-improvement) + feedback, rubric defined in scenario config.
 
 ### Out of scope (document as future "production stack" — do NOT build)

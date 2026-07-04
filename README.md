@@ -10,7 +10,7 @@ scoring pass — and everything scenario-specific is **data, not code**.
 
 **Reference scenario shipped:** *AI Voice Roleplay for sales training* (fictional,
 in Bahasa Indonesia) — the AI plays a customer, you practice as the sales advisor,
-and a 6-step rubric scores you at the end. All voices and personas are AI-generated,
+and a SPIN-based rubric (a public sales framework) scores you at the end. All voices and personas are AI-generated,
 and this is disclosed on screen.
 
 ## Architecture
@@ -32,7 +32,7 @@ and this is disclosed on screen.
 │   └─ i18n.py        engine chrome strings per language                   │
 │                                                                          │
 │  scenarios/         one config file per use case (pure data)             │
-│   └─ sales_roleplay.py   4 fictional personas, briefing, 6-step rubric  │
+│   └─ sales_roleplay.py   4 fictional personas, briefing, SPIN rubric    │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 

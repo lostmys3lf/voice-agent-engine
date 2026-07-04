@@ -27,7 +27,7 @@ Going public (GitHub + LinkedIn). Therefore:
   needed, and can score the conversation afterward. **Everything scenario-specific is data** (a config file), so
   the same engine powers many use cases.
 - **Reference scenario shipped:** **AI Voice Roleplay for sales training** — AI plays a customer/prospect, user
-  practices as the salesperson; scored on a 6-step sales rubric. This is *one config*, chosen as the demo.
+  practices as the salesperson; scored on a SPIN-based sales rubric (public framework). This is *one config*, chosen as the demo.
 - **Why it's worth showing:** It's not "a sales demo" — it's a **voice-agent framework**. The portfolio story is
   "I built a real-time voice-agent engine; swapping a config turns it into interview practice, a language
   partner, CS training, etc." Demonstrates WebRTC speech-to-speech, barge-in, persona steering, a resilient
@@ -48,7 +48,7 @@ Going public (GitHub + LinkedIn). Therefore:
 - **Synced/animated caption** for the AI's speech.
 - **Config-driven scoring** at debrief → verdict + feedback + copyable/downloadable transcript.
 - **AI-generated-voice disclosure** on screen.
-- **One reference scenario** (sales roleplay): ~4 fictional personas + briefing + 6-step rubric.
+- **One reference scenario** (sales roleplay): ~4 fictional personas + briefing + SPIN-based rubric.
 
 ### ❌ Out of scope (document as future "production stack" — do NOT build)
 - LMS/SSO integration, cloud storage, multi-user scaling.

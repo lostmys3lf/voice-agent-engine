@@ -31,7 +31,8 @@ SCENARIO = {
         "**Lawan bicaramu:** {avatar} **{name}** — {scenario_brief}\n\n"
         "**Suasana hatinya:** {mood}.\n\n"
         "Persona akan menyapa lebih dulu. Di akhir sesi, percakapanmu dinilai "
-        "terhadap rubrik 6 langkah penjualan."
+        "memakai kerangka SPIN Selling: gali situasi & masalahnya, tunjukkan "
+        "dampaknya, lalu arahkan ke nilai solusinya."
     ),
 
     "opening": (
@@ -123,28 +124,30 @@ SCENARIO = {
     ],
 
     "scoring": {
+        # Rubrik mengikuti kerangka SPIN Selling (Neil Rackham, 1988) — kerangka
+        # penjualan publik/umum, bukan metodologi milik entitas mana pun.
         "steps": [
-            "Pembukaan: menyambut, memperkenalkan diri, dan membangun suasana nyaman",
-            "Menggali kebutuhan: bertanya tentang penggunaan, penumpang, dan anggaran calon pembeli",
-            "Presentasi solusi: menjelaskan fitur dan keunggulan mobil yang relevan dengan kebutuhan",
-            "Penanganan keberatan: merespons perbandingan, harga, atau keraguan kredit dengan data dan empati",
-            "Ajakan bertindak: mengarahkan ke langkah konkret (test drive, simulasi kredit, atau booking)",
-            "Profesionalisme: sopan, jujur, tidak memaksa, dan menjaga alur percakapan",
+            "Situation — menggali penggunaan kendaraan, jumlah penumpang, dan anggaran calon pembeli",
+            "Problem — mengangkat kebutuhan atau kendala yang belum terpenuhi kendaraan saat ini",
+            "Implication — menggali dampak kebutuhan itu bila tak terpenuhi (kenyamanan, biaya, keamanan)",
+            "Need-payoff — mengaitkan fitur & keunggulan mobil dengan nilai nyata bagi pembeli",
+            "Komitmen — mengarahkan ke langkah konkret (test drive, simulasi kredit, atau booking) tanpa memaksa",
         ],
-        "threshold": 4,
-        "pass_label": "LULUS",
-        "fail_label": "PERLU PERBAIKAN",
+        "threshold": 3,
+        "pass_label": "KONSULTATIF",
+        "fail_label": "PERLU LATIHAN",
         "feedback_prompt": (
-            "Kamu adalah pelatih penjualan otomotif berpengalaman. Nilai percakapan "
-            "latihan berikut antara {user_role} (peserta latihan, dinilai) dan "
-            "{ai_role} (diperankan AI, tidak dinilai).\n\n"
-            "Rubrik ({total} langkah):\n{steps}\n\n"
+            "Kamu adalah pelatih penjualan otomotif yang menilai memakai kerangka "
+            "SPIN Selling (Neil Rackham). Nilai percakapan latihan berikut antara "
+            "{user_role} (peserta latihan, dinilai) dan {ai_role} (diperankan AI, "
+            "tidak dinilai).\n\n"
+            "Rubrik SPIN ({total} tahap):\n{steps}\n\n"
             "Transkrip:\n{transcript}\n\n"
             "Nilai HANYA performa {user_role}. Balas dalam JSON persis dengan format:\n"
-            '{{"steps": [{{"step": "<nama langkah>", "met": true, "note": "<catatan singkat>"}}, ...], '
+            '{{"steps": [{{"step": "<nama tahap>", "met": true, "note": "<catatan singkat>"}}, ...], '
             '"feedback": "<2-4 kalimat umpan balik Bahasa Indonesia: apresiasi lalu area perbaikan>"}}\n'
             "Urutan dan jumlah item `steps` harus sama dengan rubrik. Jika sesi sangat "
-            "singkat, tetap nilai apa adanya (langkah yang tidak muncul = false) dan "
+            "singkat, tetap nilai apa adanya (tahap yang tidak muncul = false) dan "
             "berikan feedback yang membangun."
         ),
     },
