@@ -251,13 +251,17 @@ def render_realtime_sim(sc, persona, S):
         realtime.realtime_html(st.session_state.rt_token, persona, S), height=260
     )
     # plumbing, not UI: the component mirrors the live transcript into this
-    # text_area so Python can score it — keep it out of sight in an expander
-    with st.expander(S["rt_transcript_label"], expanded=False):
-        st.caption(S["rt_transcript_help"])
-        st.text_area(
-            realtime.SYNC_LABEL, key="rt_transcript_raw",
-            label_visibility="collapsed", height=110,
-        )
+    # text_area so Python can score it. Hide it with CSS only — tucking it in a
+    # collapsed expander broke the JS mirror (empty transcript at scoring)
+    st.markdown(
+        f"<style>div[data-testid='stTextArea']:has("
+        f"textarea[aria-label='{realtime.SYNC_LABEL}']){{display:none;}}</style>",
+        unsafe_allow_html=True,
+    )
+    st.text_area(
+        realtime.SYNC_LABEL, key="rt_transcript_raw",
+        label_visibility="collapsed", height=68,
+    )
 
     col_end, col_switch = st.columns(2)
     if col_end.button(S["end_and_score"], type="primary"):

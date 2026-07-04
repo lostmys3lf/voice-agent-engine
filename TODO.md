@@ -19,10 +19,17 @@
   if a Streamlit upgrade breaks it, the "end & score" path for Realtime loses
   its transcript (chained path is unaffected — its history lives in Python).
   Mitigation idea: switch to a bidirectional custom component.
-  2026-07-03: the sync text_area now lives inside a *collapsed* st.expander
-  (UX: raw JSON was visible). Confirm live that the JS mirror still reaches it
-  while collapsed — if the transcript comes up empty at scoring, this is the
-  first suspect (expand the expander during the session to check).
+  2026-07-04: CONFIRMED live — hiding the text_area in a collapsed expander
+  broke the mirror ("Belum ada percakapan yang bisa dinilai"). It now stays in
+  the main body, visually hidden with CSS only (`display:none` via `:has()`).
+  Re-verify at the next live session that end-&-score gets the transcript.
+- Realtime turn-taking feel is tuned in `engine/realtime.py::mint_client_secret`
+  (`turn_detection`: threshold 0.7, silence 1200 ms). If the persona still
+  talks over pauses or reacts to room noise, adjust there. Personas now use
+  the natural `cedar`/`marin` voices (Realtime-only; the chained path maps
+  them via `_TTS_VOICE_FALLBACK` in `engine/chained.py`). If the voice still
+  sounds robotic/tinny, suspect a Bluetooth headset dropping to HFP mode —
+  test with speakers or a wired headset.
 - HTML embedding uses `st.iframe` (new API; `components.v1.html` is deprecated,
   fallback kept in `engine/ui.py::render_html`). Verify live that the iframe is
   not sandboxed in a way that blocks the parent-DOM transcript sync above.

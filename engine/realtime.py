@@ -32,7 +32,16 @@ def mint_client_secret(api_key: str, instructions: str, voice: str, language: st
             "instructions": instructions,
             "audio": {
                 "input": {
-                    "transcription": {"model": config.MODEL_STT, "language": language}
+                    "transcription": {"model": config.MODEL_STT, "language": language},
+                    # turn-taking feel lives here: higher threshold so room noise
+                    # doesn't count as the user talking; longer silence window so
+                    # the persona waits out natural pauses instead of jumping in
+                    "turn_detection": {
+                        "type": "server_vad",
+                        "threshold": 0.7,
+                        "prefix_padding_ms": 300,
+                        "silence_duration_ms": 1200,
+                    },
                 },
                 "output": {"voice": voice},
             },

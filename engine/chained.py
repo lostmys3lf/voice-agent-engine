@@ -38,11 +38,16 @@ def generate_reply(client, instructions: str, history: list, extra_user_text: st
     return result.choices[0].message.content.strip()
 
 
+# marin/cedar are Realtime-only voices; map them to the closest TTS-API voice
+# so a scenario can name one voice and still work on the fallback path
+_TTS_VOICE_FALLBACK = {"marin": "coral", "cedar": "ash"}
+
+
 def synthesize(client, text: str, voice: str, voice_instructions: str) -> bytes:
     """Steerable TTS — `voice_instructions` is what makes personas sound distinct."""
     result = client.audio.speech.create(
         model=config.MODEL_TTS,
-        voice=voice,
+        voice=_TTS_VOICE_FALLBACK.get(voice, voice),
         input=text,
         instructions=voice_instructions,
         response_format="mp3",

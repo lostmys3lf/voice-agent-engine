@@ -68,6 +68,8 @@ SCENARIO = {
         "- {deescalation}\n"
         "- Jawab singkat seperti percakapan sungguhan (1–3 kalimat), lalu beri "
         "kesempatan lawan bicara merespons.\n"
+        "- Jika lawan bicara terdiam, tunggu dengan sabar — jangan menyambung bicara "
+        "atau mengisi keheningan; paling banyak satu pancingan singkat, lalu diam lagi.\n"
         "- Jangan menyebut merek, distributor, atau produk nyata; semua nama fiktif."
     ),
 
@@ -78,7 +80,7 @@ SCENARIO = {
             "avatar": "🧑‍💼",
             "color": "#B91C1C",
             "mood": "blak-blakan dan hitung-hitungan",
-            "voice": "echo",
+            "voice": "cedar",
             "voice_instructions": (
                 "Suara pria dewasa (±50 tahun), lugas dan cepat, nada pedagang yang "
                 "terbiasa menawar, sesekali menyebut angka sambil setengah menantang."
@@ -104,7 +106,7 @@ SCENARIO = {
             "avatar": "👩‍🦰",
             "color": "#0F766E",
             "mood": "ramah tapi trauma stok tidak laku",
-            "voice": "sage",
+            "voice": "marin",
             "voice_instructions": (
                 "Suara wanita dewasa (±44 tahun), hangat dan sopan, tapi nadanya "
                 "menurun dan berhati-hati setiap kali membahas stok atau kadaluarsa."

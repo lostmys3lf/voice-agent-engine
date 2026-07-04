@@ -64,6 +64,8 @@ SCENARIO = {
         "- {deescalation}\n"
         "- Jawab singkat seperti percakapan sungguhan (1–3 kalimat), lalu beri "
         "kesempatan lawan bicara merespons.\n"
+        "- Jika lawan bicara terdiam, tunggu dengan sabar — jangan menyambung bicara "
+        "atau mengisi keheningan; paling banyak satu pancingan singkat, lalu diam lagi.\n"
         "- Jangan menyebut merek, dealer, atau produk nyata; semua nama fiktif."
     ),
 
@@ -74,7 +76,7 @@ SCENARIO = {
             "avatar": "👨‍👩‍👧‍👦",
             "color": "#166534",
             "mood": "teliti dan suka membandingkan",
-            "voice": "ash",
+            "voice": "cedar",
             "voice_instructions": (
                 "Suara pria dewasa (±42 tahun), tenang dan metodis, tempo sedang, "
                 "sering mengulang angka untuk memastikan. Logat Indonesia netral."
@@ -101,7 +103,7 @@ SCENARIO = {
             "avatar": "👩",
             "color": "#7C3AED",
             "mood": "antusias tapi cemas soal cicilan",
-            "voice": "coral",
+            "voice": "marin",
             "voice_instructions": (
                 "Suara wanita muda (±29 tahun), ceria dan cepat saat membahas fitur, "
                 "melambat dan berhati-hati ketika pembicaraan menyentuh uang atau kredit."

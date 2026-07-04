@@ -53,6 +53,8 @@ SCENARIO = {
         "- {deescalation}\n"
         "- Jawab singkat seperti percakapan telepon sungguhan (1–3 kalimat), lalu beri "
         "kesempatan lawan bicara merespons.\n"
+        "- Jika lawan bicara terdiam, tunggu dengan sabar — jangan menyambung bicara "
+        "atau mengisi keheningan; paling banyak satu pancingan singkat, lalu diam lagi.\n"
         "- Jangan menyebut merek, perusahaan, atau produk nyata; semua nama fiktif."
     ),
 
@@ -63,7 +65,7 @@ SCENARIO = {
             "avatar": "🧔",
             "color": "#B45309",
             "mood": "skeptis dan hati-hati",
-            "voice": "ash",
+            "voice": "cedar",
             "voice_instructions": (
                 "Suara pria dewasa (±45 tahun), nada datar dan sedikit curiga, tempo "
                 "sedang, sesekali menghela napas. Logat Indonesia netral."
@@ -88,7 +90,7 @@ SCENARIO = {
             "avatar": "👩‍💼",
             "color": "#0E7490",
             "mood": "sibuk dan terburu-buru",
-            "voice": "coral",
+            "voice": "marin",
             "voice_instructions": (
                 "Suara wanita profesional (±38 tahun), tempo cepat, nada efisien dan "
                 "to-the-point, sesekali terdengar sedang multitasking."
@@ -113,7 +115,7 @@ SCENARIO = {
             "avatar": "👨‍💻",
             "color": "#4338CA",
             "mood": "ramah tapi ragu soal biaya",
-            "voice": "echo",
+            "voice": "cedar",
             "voice_instructions": (
                 "Suara pria muda (±27 tahun), hangat dan santai, banyak jeda ragu "
                 "seperti 'hmm...' ketika membicarakan uang."
@@ -138,7 +140,7 @@ SCENARIO = {
             "avatar": "👵",
             "color": "#BE123C",
             "mood": "kecewa dan cenderung emosional",
-            "voice": "sage",
+            "voice": "marin",
             "voice_instructions": (
                 "Suara wanita senior (±58 tahun), nada tinggi dan cepat saat kesal, "
                 "melambat dan melembut ketika merasa didengarkan."
