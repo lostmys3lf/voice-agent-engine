@@ -17,3 +17,10 @@ env/
 .vscode/
 .DS_Store
 Thumbs.db
+2026-07-04 19-29-07.mp4
+
+# internal build docs — kept local, not part of the public portfolio repo
+CLAUDE.md
+TODO.md
+plans/
+*.docx

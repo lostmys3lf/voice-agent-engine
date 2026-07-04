@@ -10,7 +10,9 @@ scoring pass — and everything scenario-specific is **data, not code**.
 
 **Reference scenario shipped:** *AI Voice Roleplay for sales training* (fictional,
 in Bahasa Indonesia) — the AI plays a customer, you practice as the sales advisor,
-and a SPIN-based rubric (a public sales framework) scores you at the end. All voices and personas are AI-generated,
+and a SPIN-based rubric (a public sales framework) scores you at the end. Three
+variants ship as data (protection program, car sales, FMCG/retail) to show that a
+new use case is just a new config file. All voices and personas are AI-generated,
 and this is disclosed on screen.
 
 ## Architecture
@@ -29,10 +31,13 @@ and this is disclosed on screen.
 │   ├─ scenario.py    scenario discovery, validation, prompt assembly     │
 │   ├─ ui.py          synced-caption audio player (voice first, text as   │
 │   │                 a live caption — not a script wall)                  │
-│   └─ i18n.py        engine chrome strings per language                   │
+│   ├─ i18n.py        engine chrome strings per language                   │
+│   └─ config.py      centralized model IDs (the only place they live)    │
 │                                                                          │
 │  scenarios/         one config file per use case (pure data)             │
-│   └─ sales_roleplay.py   4 fictional personas, briefing, SPIN rubric    │
+│   ├─ sales_roleplay.py   protection program — personas, brief, SPIN     │
+│   ├─ sales_otomotif.py   car sales variant (same engine, new data)      │
+│   └─ sales_fmcg.py       FMCG / retail variant (same engine, new data)  │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
