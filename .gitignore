@@ -24,3 +24,11 @@ CLAUDE.md
 TODO.md
 plans/
 *.docx
+
+# LinkedIn post materials — kept local (video tutorial, script, carousel, images)
+Picture1.png
+*.pptx
+*.mp4
+*.mov
+*.mkv
+*.webm
