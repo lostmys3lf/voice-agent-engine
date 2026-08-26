@@ -17,6 +17,17 @@ and this is disclosed on screen.
 
 ## Architecture
 
+![Architecture of the Voice Agent Engine: a scenario config layer feeding a scenario-agnostic engine with two voice paths — Realtime over WebRTC and a chained STT/LLM/TTS fallback — plus a config-driven scoring pass](docs/architecture.png)
+
+The scenario config (left) is pure data. The engine (centre) never hardcodes persona,
+role, rubric, or language text — it reads all of that from whichever config is active,
+runs the conversation through one of the two voice paths, and scores the transcript at
+the end. Dashed arrows are network calls to the model API; the API key stays server-side
+and only a short-lived ephemeral token ever reaches the browser.
+
+<details>
+<summary>Module layout (text view)</summary>
+
 ```
 ┌───────────────────────────── Streamlit app ─────────────────────────────┐
 │  Stage machine: setup → briefing → mic test → simulation → debrief      │
@@ -40,6 +51,8 @@ and this is disclosed on screen.
 │   └─ sales_fmcg.py       FMCG / retail variant (same engine, new data)  │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 **The core design rule:** the engine never hardcodes persona text, role names,
 briefing copy, scoring criteria, or display language. A scenario file declares
